@@ -1,0 +1,61 @@
+---
+
+
+- name: install docker minikube
+  hosts: localhost
+  become: yes
+  become_user: vagrant
+  vars: 
+    minikube_install_dir: /usr/local/bin/kube
+    minikube_version: latest
+    kubectl_version: v1.9.1
+    docker_machine_version: v0.13.0
+    docker_machine_xhyve_driver_version: v0.3.3
+
+ 
+
+
+  tasks:
+    - name: set facts
+      set_fact:
+        translated_architecture: amd64
+      when: ansible_architecture == 'x86_64' 
+
+
+    - name: Create a directory if it does not exist
+      file:
+       path: /usr/local/bin/kube
+       state: directory
+       
+      become: yes
+      become_user: root
+        # - name: install kubectl 
+   #   become_method: sudo
+   #   get_url: url="curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl" des="/home/vagrant/kube"
+      #shell: chmod +x ./kubectl 
+      #shell: mv ./kubectl /usr/local/bin/kubectl
+
+
+    - name: get binaries
+      get_url: url="{{ item.url }}" dest="{{ item.dest }}"
+      with_items:
+        - url: https://storage.googleapis.com/minikube/releases/{{ minikube_version }}/minikube-{{ ansible_system|lower }}-amd64
+          dest: "{{ minikube_install_dir }}/minikube"
+        - url: "https://storage.googleapis.com/kubernetes-release/release/{{ kubectl_version }}/bin/{{ ansible_system|lower }}/{{ translated_architecture }}/kubectl"
+          dest: "{{ minikube_install_dir }}/kubectl"
+        - url: "https://github.com/docker/machine/releases/download/{{ docker_machine_version }}/docker-machine-{{ ansible_system }}-{{ ansible_architecture }}"
+          dest: "{{ minikube_install_dir }}/docker-machine"
+      become: yes 
+      become_user: root
+
+
+    - name: chmod binaries
+      file: dest="{{ minikube_install_dir }}/{{ item }}" mode=0755
+      with_items:
+        - minikube
+        - kubectl
+        - docker-machine
+      become: yes
+      become_user: root
+    
+    
