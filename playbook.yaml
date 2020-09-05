@@ -57,5 +57,8 @@
         - docker-machine
       become: yes
       become_user: root
-    
-    
+ 
+    - name: start minikube 
+      become: yes 
+      become_user: root 
+      shell: minikube start --vm-driver=none 
