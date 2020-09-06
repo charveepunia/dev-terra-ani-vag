@@ -34,7 +34,10 @@
    #   get_url: url="curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl" des="/home/vagrant/kube"
       #shell: chmod +x ./kubectl 
       #shell: mv ./kubectl /usr/local/bin/kubectl
-
+    - name: innstall conntrack
+      shell: apt install conntrack -y 
+      become: yes
+      become_user: root
 
     - name: get binaries
       get_url: url="{{ item.url }}" dest="{{ item.dest }}"
@@ -60,10 +63,7 @@
       become: yes
       become_user: root
       
-    - name: innstall conntrack
-      shell: apt install conntrack -y 
-      become: yes
-      become_user: root
+
 
     - name: chmod binaries
       file: dest="{{ minikube_install_dir }}/{{ item }}" mode=0755
