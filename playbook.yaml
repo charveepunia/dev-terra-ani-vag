@@ -88,18 +88,18 @@
 #    - name: unzip terraform  
 #      shell: unzip {{ minikube_install_dir }}/terrafrom/terraform_{{terraform_version}}_{{ ansible_system }}_{{ ansible_architecture }}.zip
       
-#    - name: copy to bin root
- #     shell: mv {{ minikube_install_dir }}/terraform /usr/local/bin
-    - name: create dir  
-      file:
-       path: /terraform
-       state: directory
-      become: yes
-      become_user: root
+##    - name: copy to bin root
+# #     shell: mv {{ minikube_install_dir }}/terraform /usr/local/bin
+#    - name: create dir  
+#      file:
+#       path: /terraform
+#       state: directory
+#      become: yes
+#      become_user: root
 
        
-    - name: copy terraform file 
-      shell: cp /dev-terra-ani-vag/main.tf /terraform/main.tf
+#    - name: copy terraform file 
+#      shell: cp /dev-terra-ani-vag/main.tf /terraform/main.tf
 ##      src: /dev-terra-ani-vag/main.tf
 ##      dest: /terraform/main.tf
 
