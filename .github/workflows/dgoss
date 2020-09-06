@@ -17,7 +17,7 @@ if [ -z "$GOSS_VER" ]; then
     echo "ERROR: Could not automatically detect latest version, set GOSS_VER env var and re-run"
     exit 1
 fi
-GOSS_DST=${GOSS_DST:-/home/ubuntu/}
+GOSS_DST=${GOSS_DST:-/}
 INSTALL_LOC="${GOSS_DST%/}/goss"
 DGOSS_INSTALL_LOC="${GOSS_DST%/}/dgoss"
 touch "$INSTALL_LOC" || { echo "ERROR: Cannot write to $GOSS_DST set GOSS_DST elsewhere or use sudo"; exit 1; }
