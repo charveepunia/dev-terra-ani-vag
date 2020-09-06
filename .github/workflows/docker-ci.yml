@@ -47,7 +47,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: install dgoss
-        run: cp dgoss /usr/local/bin/
+        run: chmod +x dgoss \
+             sh dgoss \
+             sudo cp dgoss /usr/local/bin \
+             sudo cp goss /usr/local/bin
         
       - name: Build image
         run: docker build . --file Dockerfile --tag $IMAGE_NAME
