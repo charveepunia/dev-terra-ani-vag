@@ -1,5 +1,6 @@
 ---
-
+- minikube_dependencies:
+    - unzip
 
 - name: install docker minikube
   hosts: localhost
@@ -10,7 +11,7 @@
     minikube_version: latest
     kubectl_version: v1.9.1
     docker_machine_version: v0.13.0
-    docker_machine_xhyve_driver_version: v0.3.3
+    terraform_version: 0.12.24
 
  
 
@@ -45,9 +46,17 @@
           dest: "{{ minikube_install_dir }}/kubectl"
         - url: "https://github.com/docker/machine/releases/download/{{ docker_machine_version }}/docker-machine-{{ ansible_system }}-{{ ansible_architecture }}"
           dest: "{{ minikube_install_dir }}/docker-machine"
+        - url: "https://releases.hashicorp.com/terraform/{{terraform_version}}/terraform_{{terraform_version}}_{{ ansible_system }}_{{ ansible_architecture }}.zip"
+          dest: "{{ minikube_install_dir }}/terrafrom"
       become: yes 
       become_user: root
 
+
+    - name: install the required packages
+      package:
+        name: "{{ item }}"
+        state: latest
+      with_items: "{{ minikube_dependencies }}"
 
     - name: chmod binaries
       file: dest="{{ minikube_install_dir }}/{{ item }}" mode=0755
@@ -62,6 +71,31 @@
       become: yes 
       become_user: root 
       shell: minikube start --vm-driver=none 
+      
+      
+    - name: unzip terraform  
+      shell: unzip {{ minikube_install_dir }}/terrafrom/terraform_{{terraform_version}}_{{ ansible_system }}_{{ ansible_architecture }}.zip
+      
+    - name: copy to bin root
+      shell: mv {{ minikube_install_dir }}/terrafrom/terraform /usr/local/bin
+    - name: create dir  
+      file:
+       path: /terraform
+       state: directory
+       
+    - name: copy terraform file 
+      src: /home/vagrant/dev-terra-ani-vag/main.tf
+      dest: /terraform/
+
+    - name: execute terraform init 
+      shell: terraform init
+      
+    - name: terraform plan 
+      shell: terraform plan 
+      
+    - name: terraform apply 
+      shell: terraform apply 
+
       
     
       
