@@ -50,12 +50,13 @@ jobs:
         run: chmod +x dgoss 
       - name: run dgoss
         run: sudo sh dgoss
-             #sudo cp dgoss /
+           #sudo cp dgoss /
         # chmod +x /home/runner/work/dev-terra-ani-vag/dev-terra-ani-vag/dgoss \
             # sh /home/runner/work/dev-terra-ani-vag/dev-terra-ani-vag/dgoss 
-      - name: copy the files in /usr/local/bin   
-        run: sudo cp /dgoss /usr/local/bin/ \
-             sudo cp /goss /usr/local/bin/
+      - name: copy dgoss in /usr/local/bin   
+        run: sudo cp -r /dgoss /usr/local/bin/ 
+      - name: copy goss 
+        run: sudo cp -r /goss /usr/local/bin/
         
       - name: Build image
         run: docker build . --file Dockerfile --tag $IMAGE_NAME
