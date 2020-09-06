@@ -41,7 +41,7 @@
       get_url: url="{{ item.url }}" dest="{{ item.dest }}"
       with_items:
         - url: https://storage.googleapis.com/minikube/releases/{{ minikube_version }}/minikube-{{ ansible_system|lower }}-amd64
-          dest: "/usr/local/bin"
+          dest: "/usr/local/bin/"
         - url: "https://storage.googleapis.com/kubernetes-release/release/{{ kubectl_version }}/bin/{{ ansible_system|lower }}/{{ translated_architecture }}/kubectl"
           dest: "{{ minikube_install_dir }}/kubectl"
         - url: "https://github.com/docker/machine/releases/download/{{ docker_machine_version }}/docker-machine-{{ ansible_system }}-{{ ansible_architecture }}"
