@@ -66,11 +66,11 @@ jobs:
 
       - name: Log into GitHub Container Registry
       # TODO: Create a PAT with `read:packages` and `write:packages` scopes and save it as an Actions secret `CR_PAT`
-        run: echo "${{ secrets.CR_PAT }}" | docker login https://ghcr.io -u charvee11 --password-stdin
+        run: echo "${{ secrets.CR_PAT }}" | docker login https://hub.docker.com/repository/docker -u charvee11 --password-stdin
 
       - name: Push image to GitHub Container Registry
         run: |
-          IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME
+          IMAGE_ID=https://hub.docker.com/repository/docker/charvee11/$IMAGE_NAME
 
           # Change all uppercase to lowercase
           IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
