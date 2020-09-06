@@ -70,7 +70,7 @@ jobs:
 
       - name: Push image to GitHub Container Registry
         run: |
-          IMAGE_ID=https://hub.docker.com/repository/docker/charvee11/$IMAGE_NAME
+          IMAGE_ID=charvee11/$IMAGE_NAME
 
           # Change all uppercase to lowercase
           IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
