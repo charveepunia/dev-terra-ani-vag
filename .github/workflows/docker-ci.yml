@@ -49,7 +49,7 @@ jobs:
       - name: install dgoss
         run: chmod +x dgoss 
       - name: run dgoss
-        run: sh dgoss
+        run: sudo sh dgoss
              #sudo cp dgoss /
         # chmod +x /home/runner/work/dev-terra-ani-vag/dev-terra-ani-vag/dgoss \
             # sh /home/runner/work/dev-terra-ani-vag/dev-terra-ani-vag/dgoss 
