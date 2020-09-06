@@ -1,0 +1,27 @@
+A go Application which displays the hostname of the server on which it is running . 
+
+Step1. Go to the Actions above (gitLab workflow: CI):
+       - build Docker 
+       - Test Docker using Dgoss
+       - Docker images pushed to repo        
+
+Step2. Use the Vagrant file given in the repo, run below commands:
+       - vagrant up 
+                - it install Ansible 
+                              - Ansible install Docker, Kubectl, minikube (ansible-playbook playbook.yaml)
+                              - terraform command to deploy the app on minikube 
+                                     - terraform init 
+                                     - terraform plan
+                                     - terraform apply 
+         
+                              
+                - installs Terraform ( was facing issue installing terrafrom from ansible, so did it with vagrant)
+
+
+Vagrant file : Vagrantfile
+terraform file : main.tf
+ansible file : playbook.yaml
+Dgoss : goss.yaml
+App file : test.go 
+CI  : docker-ci.yml
+Dockerimage : charvee11/hostnameingo:latest
