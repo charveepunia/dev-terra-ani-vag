@@ -48,10 +48,10 @@ jobs:
       - uses: actions/checkout@v2
       - name: install dgoss
         run: pwd 
-           #  chmod +x dgoss \
-           #  sh dgoss \
-           #  sudo cp dgoss /usr/local/bin \
-           #  sudo cp goss /usr/local/bin
+             chmod +x /home/runner/work/dev-terra-ani-vag/dev-terra-ani-vag/dgoss \
+             sh /home/runner/work/dev-terra-ani-vag/dev-terra-ani-vag/dgoss \
+             sudo cp /home/runner/work/dev-terra-ani-vag/dev-terra-ani-vag/dgoss /usr/local/bin \
+             sudo cp /home/runner/work/dev-terra-ani-vag/dev-terra-ani-vag/goss /usr/local/bin
         
       - name: Build image
         run: docker build . --file Dockerfile --tag $IMAGE_NAME
