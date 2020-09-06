@@ -1,0 +1,23 @@
+file:
+  /opt/deployment/get_host/start_server.sh:
+    exists: true
+    mode: "0775"
+    size: 102
+    owner: root
+    group: root
+    filetype: file
+    contains: []
+  /opt/deployment/get_host/test.go:
+    exists: true
+    mode: "0664"
+    size: 410
+    owner: root
+    group: root
+    filetype: file
+    contains: []
+package:
+  go:
+    installed: false
+process:
+  go:
+    running: true
