@@ -6,10 +6,10 @@
   become: yes
   become_user: vagrant
   vars: 
-    minikube_install_dir: /usr/local/bin/kube
+    minikube_install_dir: /usr/local/bin
     minikube_version: latest
     kubectl_version: v1.9.1
-    docker_machine_version: v0.13.0
+    docker_machine_version: v0.16.2
     terraform_version: 0.12.24
    
     
@@ -25,7 +25,7 @@
 
     - name: Create a directory if it does not exist
       file:
-       path: /usr/local/bin/kube
+       path: /usr/local/bin/
        state: directory
        
       become: yes
@@ -41,7 +41,7 @@
       get_url: url="{{ item.url }}" dest="{{ item.dest }}"
       with_items:
         - url: https://storage.googleapis.com/minikube/releases/{{ minikube_version }}/minikube-{{ ansible_system|lower }}-amd64
-          dest: "/usr/local/bin/"
+          dest: "/usr/local/bin/minikube"
         - url: "https://storage.googleapis.com/kubernetes-release/release/{{ kubectl_version }}/bin/{{ ansible_system|lower }}/{{ translated_architecture }}/kubectl"
           dest: "{{ minikube_install_dir }}/kubectl"
         - url: "https://github.com/docker/machine/releases/download/{{ docker_machine_version }}/docker-machine-{{ ansible_system }}-{{ ansible_architecture }}"
@@ -57,45 +57,55 @@
       become: yes
       become_user: root
 
+    - name: install docker 
+      shell: apt install docker -y 
+      become: yes
+      become_user: root
+
 
     - name: chmod binaries
       file: dest="{{ minikube_install_dir }}/{{ item }}" mode=0755
       with_items:
-        - minikube
+        
         - kubectl
         - docker-machine
       become: yes
       become_user: root
  
-    - name: start minikube 
-      become: yes 
-      become_user: root 
-      shell: minikube start --vm-driver=none 
-      
-      
-    - name: unzip terraform  
-      shell: unzip {{ minikube_install_dir }}/terrafrom/terraform_{{terraform_version}}_{{ ansible_system }}_{{ ansible_architecture }}.zip
-      
-    - name: copy to bin root
-      shell: mv {{ minikube_install_dir }}/terrafrom/terraform /usr/local/bin
-    - name: create dir  
-      file:
-       path: /terraform
-       state: directory
-       
-    - name: copy terraform file 
-      shell: cp /dev-terra-ani-vag/main.tf /terraform/main.tf
-#      src: /dev-terra-ani-vag/main.tf
-#      dest: /terraform/main.tf
+    - name: chmod minikube
+      file: dest="/usr/local/bin/minikube" mode=0755
+      become: yes
+      become_user: root
 
-    - name: execute terraform init 
-      shell: terraform init
+#    - name: start minikube 
+#      become: yes 
+#      become_user: root 
+#      shell: minikube start --vm-driver=docker 
       
-    - name: terraform plan 
-      shell: terraform plan 
       
-    - name: terraform apply 
-      shell: terraform apply 
+#    - name: unzip terraform  
+#      shell: unzip {{ minikube_install_dir }}/terrafrom/terraform_{{terraform_version}}_{{ ansible_system }}_{{ ansible_architecture }}.zip
+      
+#    - name: copy to bin root
+#      shell: mv {{ minikube_install_dir }}/terraform /usr/local/bin
+#    - name: create dir  
+#      file:
+#       path: /terraform
+#       state: directory
+       
+#    - name: copy terraform file 
+#      shell: cp /dev-terra-ani-vag/main.tf /terraform/main.tf
+##      src: /dev-terra-ani-vag/main.tf
+##      dest: /terraform/main.tf
+
+#    - name: execute terraform init 
+#      shell: terraform init
+      
+#    - name: terraform plan 
+#      shell: terraform plan 
+      
+#    - name: terraform apply 
+#      shell: terraform apply 
 
       
     
