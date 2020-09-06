@@ -46,6 +46,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - name: install dgoss
+        shell: sudo curl -fsSL https://goss.rocks/install | sh
+        
       - name: Build image
         run: docker build . --file Dockerfile --tag $IMAGE_NAME
      
