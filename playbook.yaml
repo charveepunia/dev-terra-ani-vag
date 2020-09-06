@@ -50,10 +50,10 @@
       become: yes 
       become_user: root
 
-    - name: install the required packages
-      shell: apt install unzip -y
-      become: yes
-      become_user: root
+#    - name: install the required packages
+#      shell: apt install unzip -y
+#      become: yes
+#      become_user: root
 
     - name: install docker 
       shell: apt install docker.io -y 
@@ -79,16 +79,16 @@
 #      become: yes
 #      become_user: root
     
-#    - name: start minikube 
-#      become: yes 
-#      become_user: root 
-#      shell: minikube start --vm-driver=none 
+    - name: start minikube 
+      become: yes 
+      become_user: root 
+      shell: minikube start --vm-driver=none 
 
 
-    - name: unzip terraform  
-      shell: unzip {{ minikube_install_dir }}/terraform_{{terraform_version}}_linux_amd64.zip
-      become: yes
-      become_user: root      
+#    - name: unzip terraform  
+#      shell: unzip {{ minikube_install_dir }}/terraform_{{terraform_version}}_linux_amd64.zip
+#      become: yes
+#      become_user: root      
 
     - name: chmod bineries
       file: dest="/usr/local/bin/terraform" mode=0755
