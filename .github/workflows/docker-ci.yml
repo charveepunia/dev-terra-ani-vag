@@ -62,7 +62,7 @@ jobs:
         run: docker build . --file Dockerfile --tag $IMAGE_NAME
      
       - name: test image 
-        run: dgoss run $IMAGE_NAME
+        run: sudo dgoss run $IMAGE_NAME
 
       - name: Log into GitHub Container Registry
       # TODO: Create a PAT with `read:packages` and `write:packages` scopes and save it as an Actions secret `CR_PAT`
