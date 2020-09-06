@@ -59,7 +59,11 @@
       shell: apt install docker.io -y 
       become: yes
       become_user: root
-
+      
+    - name: innstall conntrack
+      shell: apt install conntrack -y 
+      become: yes
+      become_user: root
 
     - name: chmod binaries
       file: dest="{{ minikube_install_dir }}/{{ item }}" mode=0755
