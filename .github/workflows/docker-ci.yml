@@ -47,9 +47,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: install dgoss
-        run: cp dgoss / \
-             cd / \
-             pwd
+        run: cp dgoss / 
+             
+             
             # chmod +x /home/runner/work/dev-terra-ani-vag/dev-terra-ani-vag/dgoss \
             # sh /home/runner/work/dev-terra-ani-vag/dev-terra-ani-vag/dgoss 
       - name: copy the files in /usr/local/bin   
