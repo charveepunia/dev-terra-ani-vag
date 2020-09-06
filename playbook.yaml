@@ -1,6 +1,5 @@
 ---
-- minikube_dependencies:
-    - unzip
+
 
 - name: install docker minikube
   hosts: localhost
@@ -12,7 +11,8 @@
     kubectl_version: v1.9.1
     docker_machine_version: v0.13.0
     terraform_version: 0.12.24
-
+   
+    
  
 
 
@@ -41,22 +41,22 @@
       get_url: url="{{ item.url }}" dest="{{ item.dest }}"
       with_items:
         - url: https://storage.googleapis.com/minikube/releases/{{ minikube_version }}/minikube-{{ ansible_system|lower }}-amd64
-          dest: "{{ minikube_install_dir }}/minikube"
+          dest: "/usr/local/bin"
         - url: "https://storage.googleapis.com/kubernetes-release/release/{{ kubectl_version }}/bin/{{ ansible_system|lower }}/{{ translated_architecture }}/kubectl"
           dest: "{{ minikube_install_dir }}/kubectl"
         - url: "https://github.com/docker/machine/releases/download/{{ docker_machine_version }}/docker-machine-{{ ansible_system }}-{{ ansible_architecture }}"
           dest: "{{ minikube_install_dir }}/docker-machine"
-        - url: "https://releases.hashicorp.com/terraform/{{terraform_version}}/terraform_{{terraform_version}}_{{ ansible_system }}_{{ ansible_architecture }}.zip"
+        - url: "https://releases.hashicorp.com/terraform/{{terraform_version}}/terraform_{{terraform_version}}_linux_amd64.zip"
           dest: "{{ minikube_install_dir }}/terrafrom"
       become: yes 
       become_user: root
 
 
     - name: install the required packages
-      package:
-        name: "{{ item }}"
-        state: latest
-      with_items: "{{ minikube_dependencies }}"
+      shell: apt install unzip -y
+      become: yes
+      become_user: root
+
 
     - name: chmod binaries
       file: dest="{{ minikube_install_dir }}/{{ item }}" mode=0755
@@ -84,8 +84,9 @@
        state: directory
        
     - name: copy terraform file 
-      src: /home/vagrant/dev-terra-ani-vag/main.tf
-      dest: /terraform/
+      shell: cp /dev-terra-ani-vag/main.tf /terraform/main.tf
+#      src: /dev-terra-ani-vag/main.tf
+#      dest: /terraform/main.tf
 
     - name: execute terraform init 
       shell: terraform init
